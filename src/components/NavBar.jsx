@@ -119,7 +119,7 @@ function NavBar({ toggleChat }) {
               >
                 <ChatBubbleLeftIcon className="h-5 w-5 mr-2" />
               </motion.div>
-              Ask Me Anything!
+              Ask Away!
             </motion.button>
           </div>
           <div className="sm:hidden flex items-center">
