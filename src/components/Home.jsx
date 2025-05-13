@@ -195,7 +195,7 @@ function Home() {
       <NavBar toggleChat={toggleChat} />
       <section
         id="top"
-        className="min-h-[80vh] flex items-center justify-center bg-gradient-to-r from-blue-100 to-white pt-8 relative overflow-hidden w-full sm:min-h-screen sm:pt-16"
+        className="min-h-[85vh] flex items-center justify-center bg-gradient-to-r from-blue-100 to-white pt-8 relative overflow-hidden w-full sm:min-h-screen sm:pt-16"
       >
         <div className="absolute bottom-0 w-full h-1/2 lottie-container">
           <Lottie
@@ -254,7 +254,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-4 right-4 text-sm text-gray-600 hover:text-blue-500 transition sm:bottom-6 sm:right-6"
+            className="absolute bottom-4 right-4 text-sm italic text-blue-600 hover:text-blue-700 transition sm:bottom-6 sm:right-6"
           >
             Curious about my approach to product leadership? Ask me via the chat!
           </motion.button>
@@ -293,7 +293,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-4 right-4 text-sm text-gray-600 hover:text-blue-500 transition sm:bottom-6 sm:right-6"
+            className="absolute bottom-4 right-4 text-sm italic text-blue-600 hover:text-blue-700 transition sm:bottom-6 sm:right-6"
           >
             Want details on my projects or roles? Use the chat to ask!
           </motion.button>
@@ -327,7 +327,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-4 right-4 text-sm text-gray-600 hover:text-blue-500 transition sm:bottom-6 sm:right-6"
+            className="absolute bottom-4 right-4 text-sm italic text-blue-600 hover:text-blue-700 transition sm:bottom-6 sm:right-6"
           >
             Interested in my academic journey? Chat with me to learn more!
           </motion.button>
@@ -360,7 +360,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-4 right-4 text-sm text-gray-600 hover:text-blue-500 transition sm:bottom-6 sm:right-6"
+            className="absolute bottom-4 right-4 text-sm italic text-blue-600 hover:text-blue-700 transition sm:bottom-6 sm:right-6"
           >
             Questions about my certifications? Hit the chat button to ask!
           </motion.button>
@@ -394,7 +394,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-4 right-4 text-sm text-gray-600 hover:text-blue-500 transition sm:bottom-6 sm:right-6"
+            className="absolute bottom-4 right-4 text-sm italic text-blue-600 hover:text-blue-700 transition sm:bottom-6 sm:right-6"
           >
             Wondering how I apply my skills? Ask me through the chat!
           </motion.button>
@@ -434,7 +434,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-4 right-4 text-sm text-gray-600 hover:text-blue-500 transition sm:bottom-6 sm:right-6"
+            className="absolute bottom-4 right-4 text-sm italic text-blue-600 hover:text-blue-700 transition sm:bottom-6 sm:right-6"
           >
             Want to know more about my interests? Use the chat to ask!
           </motion.button>

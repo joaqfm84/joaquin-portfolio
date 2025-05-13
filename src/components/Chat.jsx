@@ -60,7 +60,7 @@ function Chat({ isOpen, toggleChat, resume }) {
 
   const followUpQuestions = {
     scotiabank: [
-      "What projects are you most proud of?",
+      "How long have you been a Product Owner?",
       "How do you manage teams there?",
       "What’s the best lesson learned in your current role?",
     ],
