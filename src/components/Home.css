@@ -84,4 +84,15 @@
     bottom: -15% !important;
     height: 60%;
   }
+
+  body,
+  #root,
+  .container,
+  section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-left: .3rem !important;
+    padding-right: .3rem !important;
+  }
 }

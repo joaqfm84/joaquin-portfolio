@@ -191,11 +191,11 @@ function Home() {
   };
 
   return (
-    <div className="bg-gray-100 font-sans">
+    <div className="bg-gray-100 font-sans w-full">
       <NavBar toggleChat={toggleChat} />
       <section
         id="top"
-        className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-white pt-16 relative overflow-hidden"
+        className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-white pt-16 relative overflow-hidden w-full"
       >
         <div className="absolute bottom-0 w-full h-1/2 lottie-container">
           <Lottie
@@ -208,7 +208,7 @@ function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="relative text-center z-10"
+          className="relative text-center z-10 w-full px-4 sm:max-w-4xl sm:mx-auto sm:px-4"
         >
           <h1 className="text-5xl md:text-7xl font-bold text-gray-800">
             {resume.personal.name}
@@ -231,8 +231,8 @@ function Home() {
           </div>
         </motion.div>
       </section>
-      <section id="profile" className="py-16 bg-white relative">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="profile" className="py-16 bg-white relative w-full">
+        <div className="w-full max-w-full px-0 sm:max-w-4xl sm:mx-auto sm:px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -245,7 +245,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-gray-600 leading-relaxed"
+            className="text-gray-600 leading-relaxed px-4 sm:px-0"
           >
             {resume.profile}
           </motion.p>
@@ -260,8 +260,8 @@ function Home() {
           </motion.button>
         </div>
       </section>
-      <section id="experience" className="py-16 bg-gray-50 relative">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="experience" className="py-16 bg-gray-50 relative w-full">
+        <div className="w-full max-w-full px-0 sm:max-w-4xl sm:mx-auto sm:px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -276,7 +276,7 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="mb-8"
+              className="mb-8 px-4 sm:px-0"
             >
               <h3 className="text-xl font-semibold text-gray-800">{job.role}</h3>
               <p className="text-lg text-blue-600">{job.company}</p>
@@ -299,8 +299,8 @@ function Home() {
           </motion.button>
         </div>
       </section>
-      <section id="education" className="py-16 bg-white relative">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="education" className="py-16 bg-white relative w-full">
+        <div className="w-full max-w-full px-0 sm:max-w-4xl sm:mx-auto sm:px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -315,7 +315,7 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="mb-6"
+              className="mb-6 px-4 sm:px-0"
             >
               <h3 className="text-xl font-semibold text-gray-800">{edu.degree}</h3>
               <p className="text-lg text-blue-600">{edu.institution}</p>
@@ -333,8 +333,8 @@ function Home() {
           </motion.button>
         </div>
       </section>
-      <section id="certifications" className="py-16 bg-gray-50 relative">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="certifications" className="py-16 bg-gray-50 relative w-full">
+        <div className="w-full max-w-full px-0 sm:max-w-4xl sm:mx-auto sm:px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -343,7 +343,7 @@ function Home() {
           >
             Certifications
           </motion.h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-disc list-inside text-gray-600">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-disc list-inside text-gray-600 px-4 sm:px-0">
             {resume.certifications.map((cert, index) => (
               <motion.li
                 key={index}
@@ -366,8 +366,8 @@ function Home() {
           </motion.button>
         </div>
       </section>
-      <section id="skills" className="py-16 bg-white relative">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="skills" className="py-16 bg-white relative w-full">
+        <div className="w-full max-w-full px-0 sm:max-w-4xl sm:mx-auto sm:px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -376,7 +376,7 @@ function Home() {
           >
             Skills
           </motion.h2>
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600">
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600 px-4 sm:px-0">
             {resume.skills.map((skill, index) => (
               <motion.li
                 key={index}
@@ -400,8 +400,8 @@ function Home() {
           </motion.button>
         </div>
       </section>
-      <section id="hobbies" className="py-16 bg-gray-50 relative">
-        <div className="max-w-4xl mx-auto px-4">
+      <section id="hobbies" className="py-16 bg-gray-50 relative w-full">
+        <div className="w-full max-w-full px-0 sm:max-w-4xl sm:mx-auto sm:px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -410,7 +410,7 @@ function Home() {
           >
             Hobbies
           </motion.h2>
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600">
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600 px-4 sm:px-0">
             {resume.hobbies.map((hobby, index) => {
               const Icon = hobbyIcons[hobby];
               return (
