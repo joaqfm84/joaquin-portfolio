@@ -195,7 +195,7 @@ function Home() {
       <NavBar toggleChat={toggleChat} />
       <section
         id="top"
-        className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-white pt-16 relative overflow-hidden w-full"
+        className="min-h-[80vh] flex items-center justify-center bg-gradient-to-r from-blue-100 to-white pt-8 relative overflow-hidden w-full sm:min-h-screen sm:pt-16"
       >
         <div className="absolute bottom-0 w-full h-1/2 lottie-container">
           <Lottie
