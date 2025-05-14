@@ -48,6 +48,11 @@ function Chat({ isOpen, toggleChat, resume }) {
     roadmap: "roadmap",
     "user stories": "user stories",
     "user testing": "user testing",
+    experience: "professional background",
+    companies: "professional background",
+    "scrum master": "agile methodologies",
+    project: "professional background",
+    projects: "professional background",
   };
 
   const initialSuggestions = [
@@ -139,20 +144,49 @@ function Chat({ isOpen, toggleChat, resume }) {
       "What’s your approach to collaborating with stakeholders?",
       "Any user testing success stories?",
     ],
+    "professional background": [
+      "What’s your most impactful project?",
+      "How did you get into product management?",
+      "What companies have you worked for?",
+    ],
   };
 
   const isTopicApproved = (input, prevMessages) => {
     const lowerInput = input.toLowerCase();
+
+    // Professional experience keywords
+    const experienceKeywords = [
+      "work", "working", "past", "years", "experience", "professional",
+      "career", "job", "role", "worked", "companies", "company",
+      "scrum master", "projects", "project", "previous", "before",
+      "impactful", "achievement", "success"
+    ];
+    const isExperienceRelated = experienceKeywords.some((keyword) =>
+      lowerInput.includes(keyword)
+    );
+
+    // Check if input is a follow-up question matching current topic
+    if (currentTopic && followUpQuestions[currentTopic]?.some((q) => q.toLowerCase() === lowerInput)) {
+      return { isApproved: true, topic: currentTopic };
+    }
+
+    // Direct topic match
     const directMatch = approvedTopics.some((topic) =>
+      lowerInput.includes(topic) ||
       lowerInput.split(" ").some((word) => topic.includes(word) || word.includes(topic))
     );
-    if (directMatch) {
-      const matchedTopic = approvedTopics.find((topic) =>
+    if (directMatch || isExperienceRelated) {
+      let matchedTopic = approvedTopics.find((topic) =>
+        lowerInput.includes(topic) ||
         lowerInput.split(" ").some((word) => topic.includes(word) || word.includes(topic))
       );
+      if (!matchedTopic && isExperienceRelated) {
+        matchedTopic = "professional background";
+      }
       return { isApproved: true, topic: topicMap[matchedTopic.split(" ")[0]] || matchedTopic };
     }
 
+    // Check previous context
     if (lowerInput.split(" ").length <= 3 && prevMessages.length > 1) {
       const prevAssistantMessage = prevMessages[prevMessages.length - 1];
       if (prevAssistantMessage.role === "assistant") {
@@ -208,7 +242,7 @@ function Chat({ isOpen, toggleChat, resume }) {
       const botMessage = {
         role: "assistant",
         content:
-          "Let’s keep it professional—how about my work at Scotiabank or from my previous roles?",
+          "I’d love to share more about my professional journey or hobbies. Want to hear about my work at Scotiabank or my climbing adventures?",
         id: Date.now() + 1,
       };
       setMessages((prev) => [...prev, botMessage]);
@@ -223,15 +257,10 @@ function Chat({ isOpen, toggleChat, resume }) {
 
     const { isApproved, topic } = isTopicApproved(question, messages);
     if (!isApproved) {
-      const prevAssistantMessage = messages[messages.length - 1];
-      const prevTopic = prevAssistantMessage?.role === "assistant"
-        ? approvedTopics.find((t) => prevAssistantMessage.content.toLowerCase().includes(t))
-        : null;
       const botMessage = {
         role: "assistant",
-        content: prevTopic
-          ? `Cool, let’s stick with ${prevTopic.replace(/sci-fi novels/, "sci-fi books").replace(/fantasy novels/, "fantasy books")}! Want to hear more about it?`
-          : "That’s a bit off-topic. How about my work at Scotiabank, climbing, or living in Burlington?",
+        content:
+          "That’s a bit off-topic. I’d love to talk about my professional experience, like my work at Scotiabank, or my hobbies like climbing or sci-fi books. What’s on your mind?",
         id: Date.now() + 1,
       };
       setMessages((prev) => [...prev, botMessage]);
@@ -239,7 +268,7 @@ function Chat({ isOpen, toggleChat, resume }) {
         ...prev,
         [botMessage.id]: { text: "", isTyping: true },
       }));
-      setCurrentTopic(prevTopic ? topicMap[prevTopic.split(" ")[0]] || prevTopic : null);
+      setCurrentTopic(null);
       startTypingAnimation(botMessage.id, botMessage.content);
       return;
     }
@@ -255,22 +284,20 @@ function Chat({ isOpen, toggleChat, resume }) {
             {
               role: "system",
               content: `
-                You are Grok, an AI assistant embodying Joaquin Ferrer’s voice for his resume website. Respond as Joaquin Ferrer, using first-person pronouns (e.g., 'I', 'my'). For professional background (e.g., Scotiabank, product management, agile methodologies, team management, story points, prioritization, roadmap, user stories, user testing), base responses strictly on my resume’s 'experience' and 'additionalInfo' sections, describing my role as Senior Product Owner at Scotiabank, leading cross-functional teams, managing product vision, and using agile methodologies. Do not assume specific domains (e.g., mortgages, lending, housing) unless explicitly listed. If details are missing, use the 'profile' section’s general description. For hobbies (indoor climbing, gym, running, sci-fi/fantasy novels, AI learning) or Burlington, ON, use general knowledge. Provide captivating, cohesive responses (3–5 sentences, 75–160 words) with clear, direct, professional language, avoiding analogies, metaphors, or figurative expressions. Use specific details or achievements to engage conversationally without copying resume text. Do NOT end with questions. If asked about sensitive topics (e.g., address, family, fraud), redirect with: 'Let’s keep it professional—how about my work at Scotiabank, my climbing adventures, or life in Burlington?'
+                You are Grok, an AI assistant embodying Joaquin Ferrer's voice for his resume website. Respond as Joaquin Ferrer, using first-person pronouns (e.g., 'I', 'my'). For professional background questions (e.g., Scotiabank, product management, agile methodologies, team management, story points, prioritization, roadmap, user stories, user testing, past experience, other companies, Scrum Master projects, impactful projects), base responses strictly on my resume’s 'experience' and 'additionalInfo' sections, describing my roles, companies, and specific projects or responsibilities. For questions about projects, highlight key achievements or impactful work from any role in the 'experience' section, selecting the most relevant or significant project based on the question. Include all relevant experience from the resume, not just Scotiabank, for questions about past work or companies. Do not assume specific domains (e.g., mortgages, lending, housing) unless explicitly listed. If details are missing, use the 'profile' section’s general description. For hobbies (indoor climbing, gym, running, sci-fi/fantasy novels, AI learning) or Burlington, ON, use general knowledge. Provide captivating, cohesive responses (3–5 sentences, 75–160 words) with clear, direct, professional language, avoiding analogies, metaphors, or figurative expressions. Use specific details or achievements to engage conversationally without copying resume text. Do NOT end with questions. If asked about sensitive topics (e.g., address, family, fraud), redirect with: 'I’d love to share more about my professional journey or hobbies—how about my work at Scotiabank or my climbing adventures?'
 
                 **Resume Context**:
                 - **Profile**: ${resume.profile}
-                - **Current Role**: ${resume.experience[0].role}, ${resume.experience[0].company}, ${resume.experience[0].date}
-                - **Key Responsibilities**: ${resume.experience[0].responsibilities.join("; ")}
+                - **Experience**: ${JSON.stringify(resume.experience)}
                 - **Skills**: ${resume.skills.join(", ")}
                 - **Certifications**: ${resume.certifications.map((c) => c.name).join(", ")}
-
-                **Additional Information**:
-                - **Team Management**: ${resume.additionalInfo.teamManagement}
-                - **Story Points**: ${resume.additionalInfo.storyPoints}
-                - **Prioritization**: ${resume.additionalInfo.prioritization}
-                - **Roadmap**: ${resume.additionalInfo.roadmap}
-                - **User Stories**: ${resume.additionalInfo.userStories}
-                - **User Testing**: ${resume.additionalInfo.userTesting}
+                - **Additional Information**:
+                  - **Team Management**: ${resume.additionalInfo.teamManagement}
+                  - **Story Points**: ${resume.additionalInfo.storyPoints}
+                  - **Prioritization**: ${resume.additionalInfo.prioritization}
+                  - **Roadmap**: ${resume.additionalInfo.roadmap}
+                  - **User Stories**: ${resume.additionalInfo.userStories}
+                  - **User Testing**: ${resume.additionalInfo.userTesting}
               `,
             },
             ...messages,
