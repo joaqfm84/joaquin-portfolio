@@ -66,7 +66,7 @@ function Chat({ isOpen, toggleChat, resume }) {
   const followUpQuestions = {
     scotiabank: [
       "How long have you been a Product Owner?",
-      "How do you manage teams there?",
+      "What's a lesson learned from your projects at Scotiabank?",
       "What’s the best lesson learned in your current role?",
     ],
     "indoor climbing": [
@@ -156,10 +156,26 @@ function Chat({ isOpen, toggleChat, resume }) {
 
     // Professional experience keywords
     const experienceKeywords = [
-      "work", "working", "past", "years", "experience", "professional",
-      "career", "job", "role", "worked", "companies", "company",
-      "scrum master", "projects", "project", "previous", "before",
-      "impactful", "achievement", "success"
+      "work",
+      "working",
+      "past",
+      "years",
+      "experience",
+      "professional",
+      "career",
+      "job",
+      "role",
+      "worked",
+      "companies",
+      "company",
+      "scrum master",
+      "projects",
+      "project",
+      "previous",
+      "before",
+      "impactful",
+      "achievement",
+      "success",
     ];
     const isExperienceRelated = experienceKeywords.some((keyword) =>
       lowerInput.includes(keyword)
@@ -191,9 +207,7 @@ function Chat({ isOpen, toggleChat, resume }) {
       const prevAssistantMessage = prevMessages[prevMessages.length - 1];
       if (prevAssistantMessage.role === "assistant") {
         const prevContent = prevAssistantMessage.content.toLowerCase();
-        const prevTopic = approvedTopics.find((topic) =>
-          prevContent.includes(topic)
-        );
+        const prevTopic = approvedTopics.find((topic) => prevContent.includes(topic));
         if (prevTopic) return { isApproved: true, topic: topicMap[prevTopic.split(" ")[0]] || prevTopic };
       }
     }
@@ -275,11 +289,30 @@ function Chat({ isOpen, toggleChat, resume }) {
 
     setCurrentTopic(topic);
 
+    // Check if API key is available
+    if (!import.meta.env.VITE_XAI_API_KEY) {
+      console.error("VITE_XAI_API_KEY is missing. Chat functionality disabled.");
+      const botMessage = {
+        role: "assistant",
+        content:
+          "Sorry, I’m having trouble connecting right now. Let’s talk about my work or hobbies later!",
+        id: Date.now() + 1,
+      };
+      setMessages((prev) => [...prev, botMessage]);
+      setTypingStates((prev) => ({
+        ...prev,
+        [botMessage.id]: { text: "", isTyping: true },
+      }));
+      setCurrentTopic(null);
+      startTypingAnimation(botMessage.id, botMessage.content);
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://api.x.ai/v1/chat/completions",
         {
-          model: "grok-beta",
+          model: "grok-3", // Updated model name (verify with https://x.ai/api)
           messages: [
             {
               role: "system",
@@ -325,10 +358,17 @@ function Chat({ isOpen, toggleChat, resume }) {
       startTypingAnimation(botMessage.id, botMessage.content);
     } catch (error) {
       console.error("API Error:", error.response?.data || error.message);
+      let errorMessage = "Oops, something went wrong. Let’s talk about my work or hobbies instead!";
+      if (error.response?.status === 400 && error.response?.data?.error?.includes("model")) {
+        console.error("Invalid model specified. Please verify the model name in xAI API documentation.");
+        errorMessage = "Sorry, I’m having trouble with my AI setup. Try asking about my work at Scotiabank or my hobbies!";
+      } else if (error.response?.status === 401) {
+        console.error("Invalid or missing API key.");
+        errorMessage = "I’m having trouble connecting. Let’s chat about my professional experience or hobbies!";
+      }
       const botMessage = {
         role: "assistant",
-        content:
-          "Oops, something went wrong. Let’s talk about my work or hobbies instead!",
+        content: errorMessage,
         id: Date.now() + 1,
       };
       setMessages((prev) => [...prev, botMessage]);
